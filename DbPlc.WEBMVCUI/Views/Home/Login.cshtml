@@ -1,0 +1,104 @@
+﻿@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script type="text/javascript">
+    var multiClickControl = 0;
+    $(document).ready(function () {
+        $("#btnLogin").click(function () {
+            var name = $("#loginName").val();
+            var password = $("#password").val();
+            if (name.length > 0 && password.length > 0) {
+                /*alanlar boş geçilemez kontrolu yapıldı.*/
+                if (StringValidation(name + password) === true) {
+                    if (multiClickControl === 0) {
+                        /*butona tıklayıp işlem yapılırken birden fazla tıklamada multiClickControl ile işlemin tek sefer yapılmasını sağlıyoruz.*/
+                        Login(name, password);
+                        multiClickControl++;
+                        setTimeout(MethodFinish, 1200);
+                    }
+                }
+                else {
+                    window.Swal.fire({
+                        icon: 'error',
+                        text: 'Threat Detected!'
+                    });
+                    setTimeout(MethodFinish, 2000);
+                }
+            }
+            else {
+                window.Swal.fire({
+                    icon: 'error',
+                    text: 'Fill in Username and Password  !'
+                });
+            }
+        });
+    });
+    function Login(name, password) {
+        var login = { Name: name, Password: password };
+        $.ajax({
+            async: true,
+            type: 'POST',
+            dataType: 'JSON',
+            contentType: 'application/json;charset=utf-8',
+            data: JSON.stringify(login),
+            url: '/Home/Login',
+            success: function (response) {
+                if (response.success === true) {
+                    toastr.success(response.message, 'Success Alert', { timeout: 3000 });
+                    setTimeout(MethodFinish, 1200);
+                } else {
+                    toastr.error(response.message, 'Error Alert', { timeout: 3000 });
+                }
+            },
+            error: function () {
+                toastr.message('There is some problem to process your request.', 'Error Alert', { timeout: 3000 });
+            }
+        });
+    }
+    function MethodFinish() {
+        window.open("Area", "_self");
+    }
+    function StringValidation(text) {
+        var dangerousWords = "'";
+        if (!text.match(dangerousWords)) {
+            setTimeout(MethodFinish, 1200);
+            return true;
+        }
+        return false;
+    }
+</script>
+
+<div class="jumbotron d-flex justify-content-center">
+    <div class="col-md-4 " style="margin-top: 6%">
+        <form>
+            <h3>Login to Your Account</h3>
+            <div class="row " style="margin-top: 20px">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <div class="form-group">
+                            <input type="text" name="loginName" id="loginName" class="form-control" placeholder="Name" required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <div class="form-group">
+                            <input type="password" name="password" id="password" class="form-control" placeholder="Password" required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <button class="btn btn-warning form-control" id="btnLogin" type="button" name="btnSave">Login</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

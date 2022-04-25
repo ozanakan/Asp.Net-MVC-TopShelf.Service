@@ -1,0 +1,548 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:i0="http://schemas.microsoft.com/ws/2005/02/mex/bindings" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="PlcService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:import namespace="http://schemas.microsoft.com/ws/2005/02/mex/bindings" location="http://localhost:8098/DbPlcWeb?wsdl=wsdl0" />
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost:8098/DbPlcWeb?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:8098/DbPlcWeb?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/DbPlc.Service" />
+      <xsd:import schemaLocation="http://localhost:8098/DbPlcWeb?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:8098/DbPlcWeb?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/DbPlc.EntityFramework.Entity" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="DbPlcWeb_GetAllArea_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllArea" />
+  </wsdl:message>
+  <wsdl:message name="DbPlcWeb_GetAllArea_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllAreaResponse" />
+  </wsdl:message>
+  <wsdl:message name="DbPlcWeb_GetAllArea_ResponseErrorFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/DbPlc.Service" name="detail" element="q1:ResponseError" />
+  </wsdl:message>
+  <wsdl:message name="DbPlcWeb_GetAllWorkCenter_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllWorkCenter" />
+  </wsdl:message>
+  <wsdl:message name="DbPlcWeb_GetAllWorkCenter_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllWorkCenterResponse" />
+  </wsdl:message>
+  <wsdl:message name="DbPlcWeb_GetAllWorkCenter_ResponseErrorFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/DbPlc.Service" name="detail" element="q2:ResponseError" />
+  </wsdl:message>
+  <wsdl:message name="DbPlcWeb_GetAllPlc_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllPlc" />
+  </wsdl:message>
+  <wsdl:message name="DbPlcWeb_GetAllPlc_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllPlcResponse" />
+  </wsdl:message>
+  <wsdl:message name="DbPlcWeb_GetAllPlc_ResponseErrorFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/DbPlc.Service" name="detail" element="q3:ResponseError" />
+  </wsdl:message>
+  <wsdl:message name="DbPlcWeb_GelAllPlcTag_InputMessage">
+    <wsdl:part name="parameters" element="tns:GelAllPlcTag" />
+  </wsdl:message>
+  <wsdl:message name="DbPlcWeb_GelAllPlcTag_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GelAllPlcTagResponse" />
+  </wsdl:message>
+  <wsdl:message name="DbPlcWeb_GelAllPlcTag_ResponseErrorFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/DbPlc.Service" name="detail" element="q4:ResponseError" />
+  </wsdl:message>
+  <wsdl:message name="DbPlcWeb_GetAllWorkCenterDto_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllWorkCenterDto" />
+  </wsdl:message>
+  <wsdl:message name="DbPlcWeb_GetAllWorkCenterDto_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllWorkCenterDtoResponse" />
+  </wsdl:message>
+  <wsdl:message name="DbPlcWeb_GetAllWorkCenterDto_ResponseErrorFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/DbPlc.Service" name="detail" element="q5:ResponseError" />
+  </wsdl:message>
+  <wsdl:message name="DbPlcWeb_GetAllPlcDto_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllPlcDto" />
+  </wsdl:message>
+  <wsdl:message name="DbPlcWeb_GetAllPlcDto_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllPlcDtoResponse" />
+  </wsdl:message>
+  <wsdl:message name="DbPlcWeb_GetAllPlcDto_ResponseErrorFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/DbPlc.Service" name="detail" element="q6:ResponseError" />
+  </wsdl:message>
+  <wsdl:message name="DbPlcWeb_GetAllPlcTagDto_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllPlcTagDto" />
+  </wsdl:message>
+  <wsdl:message name="DbPlcWeb_GetAllPlcTagDto_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllPlcTagDtoResponse" />
+  </wsdl:message>
+  <wsdl:message name="DbPlcWeb_GetAllPlcTagDto_ResponseErrorFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/DbPlc.Service" name="detail" element="q7:ResponseError" />
+  </wsdl:message>
+  <wsdl:message name="DbPlcWeb_AddArea_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddArea" />
+  </wsdl:message>
+  <wsdl:message name="DbPlcWeb_AddArea_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddAreaResponse" />
+  </wsdl:message>
+  <wsdl:message name="DbPlcWeb_AddArea_ResponseErrorFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/DbPlc.Service" name="detail" element="q8:ResponseError" />
+  </wsdl:message>
+  <wsdl:message name="DbPlcWeb_AddWorkCenter_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddWorkCenter" />
+  </wsdl:message>
+  <wsdl:message name="DbPlcWeb_AddWorkCenter_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddWorkCenterResponse" />
+  </wsdl:message>
+  <wsdl:message name="DbPlcWeb_AddWorkCenter_ResponseErrorFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/DbPlc.Service" name="detail" element="q9:ResponseError" />
+  </wsdl:message>
+  <wsdl:message name="DbPlcWeb_AddPlc_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddPlc" />
+  </wsdl:message>
+  <wsdl:message name="DbPlcWeb_AddPlc_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddPlcResponse" />
+  </wsdl:message>
+  <wsdl:message name="DbPlcWeb_AddPlc_ResponseErrorFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/DbPlc.Service" name="detail" element="q10:ResponseError" />
+  </wsdl:message>
+  <wsdl:message name="DbPlcWeb_AddPlcTag_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddPlcTag" />
+  </wsdl:message>
+  <wsdl:message name="DbPlcWeb_AddPlcTag_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddPlcTagResponse" />
+  </wsdl:message>
+  <wsdl:message name="DbPlcWeb_AddPlcTag_ResponseErrorFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/DbPlc.Service" name="detail" element="q11:ResponseError" />
+  </wsdl:message>
+  <wsdl:message name="DbPlcWeb_DeleteArea_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteArea" />
+  </wsdl:message>
+  <wsdl:message name="DbPlcWeb_DeleteArea_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteAreaResponse" />
+  </wsdl:message>
+  <wsdl:message name="DbPlcWeb_DeleteArea_ResponseErrorFault_FaultMessage">
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/DbPlc.Service" name="detail" element="q12:ResponseError" />
+  </wsdl:message>
+  <wsdl:message name="DbPlcWeb_DeleteWorkCenter_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteWorkCenter" />
+  </wsdl:message>
+  <wsdl:message name="DbPlcWeb_DeleteWorkCenter_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteWorkCenterResponse" />
+  </wsdl:message>
+  <wsdl:message name="DbPlcWeb_DeleteWorkCenter_ResponseErrorFault_FaultMessage">
+    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/DbPlc.Service" name="detail" element="q13:ResponseError" />
+  </wsdl:message>
+  <wsdl:message name="DbPlcWeb_DeletePlc_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeletePlc" />
+  </wsdl:message>
+  <wsdl:message name="DbPlcWeb_DeletePlc_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeletePlcResponse" />
+  </wsdl:message>
+  <wsdl:message name="DbPlcWeb_DeletePlc_ResponseErrorFault_FaultMessage">
+    <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/DbPlc.Service" name="detail" element="q14:ResponseError" />
+  </wsdl:message>
+  <wsdl:message name="DbPlcWeb_DeletePlcTag_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeletePlcTag" />
+  </wsdl:message>
+  <wsdl:message name="DbPlcWeb_DeletePlcTag_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeletePlcTagResponse" />
+  </wsdl:message>
+  <wsdl:message name="DbPlcWeb_DeletePlcTag_ResponseErrorFault_FaultMessage">
+    <wsdl:part xmlns:q15="http://schemas.datacontract.org/2004/07/DbPlc.Service" name="detail" element="q15:ResponseError" />
+  </wsdl:message>
+  <wsdl:message name="DbPlcWeb_UpdateArea_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateArea" />
+  </wsdl:message>
+  <wsdl:message name="DbPlcWeb_UpdateArea_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateAreaResponse" />
+  </wsdl:message>
+  <wsdl:message name="DbPlcWeb_UpdateArea_ResponseErrorFault_FaultMessage">
+    <wsdl:part xmlns:q16="http://schemas.datacontract.org/2004/07/DbPlc.Service" name="detail" element="q16:ResponseError" />
+  </wsdl:message>
+  <wsdl:message name="DbPlcWeb_UpdateWorkCenter_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateWorkCenter" />
+  </wsdl:message>
+  <wsdl:message name="DbPlcWeb_UpdateWorkCenter_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateWorkCenterResponse" />
+  </wsdl:message>
+  <wsdl:message name="DbPlcWeb_UpdateWorkCenter_ResponseErrorFault_FaultMessage">
+    <wsdl:part xmlns:q17="http://schemas.datacontract.org/2004/07/DbPlc.Service" name="detail" element="q17:ResponseError" />
+  </wsdl:message>
+  <wsdl:message name="DbPlcWeb_UpdatePlc_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdatePlc" />
+  </wsdl:message>
+  <wsdl:message name="DbPlcWeb_UpdatePlc_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdatePlcResponse" />
+  </wsdl:message>
+  <wsdl:message name="DbPlcWeb_UpdatePlc_ResponseErrorFault_FaultMessage">
+    <wsdl:part xmlns:q18="http://schemas.datacontract.org/2004/07/DbPlc.Service" name="detail" element="q18:ResponseError" />
+  </wsdl:message>
+  <wsdl:message name="DbPlcWeb_UpdatePlcTag_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdatePlcTag" />
+  </wsdl:message>
+  <wsdl:message name="DbPlcWeb_UpdatePlcTag_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdatePlcTagResponse" />
+  </wsdl:message>
+  <wsdl:message name="DbPlcWeb_UpdatePlcTag_ResponseErrorFault_FaultMessage">
+    <wsdl:part xmlns:q19="http://schemas.datacontract.org/2004/07/DbPlc.Service" name="detail" element="q19:ResponseError" />
+  </wsdl:message>
+  <wsdl:message name="DbPlcWeb_Login_InputMessage">
+    <wsdl:part name="parameters" element="tns:Login" />
+  </wsdl:message>
+  <wsdl:message name="DbPlcWeb_Login_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoginResponse" />
+  </wsdl:message>
+  <wsdl:message name="DbPlcWeb_Login_ResponseErrorFault_FaultMessage">
+    <wsdl:part xmlns:q20="http://schemas.datacontract.org/2004/07/DbPlc.Service" name="detail" element="q20:ResponseError" />
+  </wsdl:message>
+  <wsdl:portType name="DbPlcWeb">
+    <wsdl:operation name="GetAllArea">
+      <wsdl:input wsaw:Action="http://tempuri.org/DbPlcWeb/GetAllArea" message="tns:DbPlcWeb_GetAllArea_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/DbPlcWeb/GetAllAreaResponse" message="tns:DbPlcWeb_GetAllArea_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/DbPlcWeb/GetAllAreaResponseErrorFault" name="ResponseErrorFault" message="tns:DbPlcWeb_GetAllArea_ResponseErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllWorkCenter">
+      <wsdl:input wsaw:Action="http://tempuri.org/DbPlcWeb/GetAllWorkCenter" message="tns:DbPlcWeb_GetAllWorkCenter_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/DbPlcWeb/GetAllWorkCenterResponse" message="tns:DbPlcWeb_GetAllWorkCenter_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/DbPlcWeb/GetAllWorkCenterResponseErrorFault" name="ResponseErrorFault" message="tns:DbPlcWeb_GetAllWorkCenter_ResponseErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllPlc">
+      <wsdl:input wsaw:Action="http://tempuri.org/DbPlcWeb/GetAllPlc" message="tns:DbPlcWeb_GetAllPlc_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/DbPlcWeb/GetAllPlcResponse" message="tns:DbPlcWeb_GetAllPlc_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/DbPlcWeb/GetAllPlcResponseErrorFault" name="ResponseErrorFault" message="tns:DbPlcWeb_GetAllPlc_ResponseErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GelAllPlcTag">
+      <wsdl:input wsaw:Action="http://tempuri.org/DbPlcWeb/GelAllPlcTag" message="tns:DbPlcWeb_GelAllPlcTag_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/DbPlcWeb/GelAllPlcTagResponse" message="tns:DbPlcWeb_GelAllPlcTag_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/DbPlcWeb/GelAllPlcTagResponseErrorFault" name="ResponseErrorFault" message="tns:DbPlcWeb_GelAllPlcTag_ResponseErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllWorkCenterDto">
+      <wsdl:input wsaw:Action="http://tempuri.org/DbPlcWeb/GetAllWorkCenterDto" message="tns:DbPlcWeb_GetAllWorkCenterDto_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/DbPlcWeb/GetAllWorkCenterDtoResponse" message="tns:DbPlcWeb_GetAllWorkCenterDto_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/DbPlcWeb/GetAllWorkCenterDtoResponseErrorFault" name="ResponseErrorFault" message="tns:DbPlcWeb_GetAllWorkCenterDto_ResponseErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllPlcDto">
+      <wsdl:input wsaw:Action="http://tempuri.org/DbPlcWeb/GetAllPlcDto" message="tns:DbPlcWeb_GetAllPlcDto_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/DbPlcWeb/GetAllPlcDtoResponse" message="tns:DbPlcWeb_GetAllPlcDto_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/DbPlcWeb/GetAllPlcDtoResponseErrorFault" name="ResponseErrorFault" message="tns:DbPlcWeb_GetAllPlcDto_ResponseErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllPlcTagDto">
+      <wsdl:input wsaw:Action="http://tempuri.org/DbPlcWeb/GetAllPlcTagDto" message="tns:DbPlcWeb_GetAllPlcTagDto_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/DbPlcWeb/GetAllPlcTagDtoResponse" message="tns:DbPlcWeb_GetAllPlcTagDto_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/DbPlcWeb/GetAllPlcTagDtoResponseErrorFault" name="ResponseErrorFault" message="tns:DbPlcWeb_GetAllPlcTagDto_ResponseErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddArea">
+      <wsdl:input wsaw:Action="http://tempuri.org/DbPlcWeb/AddArea" message="tns:DbPlcWeb_AddArea_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/DbPlcWeb/AddAreaResponse" message="tns:DbPlcWeb_AddArea_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/DbPlcWeb/AddAreaResponseErrorFault" name="ResponseErrorFault" message="tns:DbPlcWeb_AddArea_ResponseErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddWorkCenter">
+      <wsdl:input wsaw:Action="http://tempuri.org/DbPlcWeb/AddWorkCenter" message="tns:DbPlcWeb_AddWorkCenter_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/DbPlcWeb/AddWorkCenterResponse" message="tns:DbPlcWeb_AddWorkCenter_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/DbPlcWeb/AddWorkCenterResponseErrorFault" name="ResponseErrorFault" message="tns:DbPlcWeb_AddWorkCenter_ResponseErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddPlc">
+      <wsdl:input wsaw:Action="http://tempuri.org/DbPlcWeb/AddPlc" message="tns:DbPlcWeb_AddPlc_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/DbPlcWeb/AddPlcResponse" message="tns:DbPlcWeb_AddPlc_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/DbPlcWeb/AddPlcResponseErrorFault" name="ResponseErrorFault" message="tns:DbPlcWeb_AddPlc_ResponseErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddPlcTag">
+      <wsdl:input wsaw:Action="http://tempuri.org/DbPlcWeb/AddPlcTag" message="tns:DbPlcWeb_AddPlcTag_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/DbPlcWeb/AddPlcTagResponse" message="tns:DbPlcWeb_AddPlcTag_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/DbPlcWeb/AddPlcTagResponseErrorFault" name="ResponseErrorFault" message="tns:DbPlcWeb_AddPlcTag_ResponseErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteArea">
+      <wsdl:input wsaw:Action="http://tempuri.org/DbPlcWeb/DeleteArea" message="tns:DbPlcWeb_DeleteArea_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/DbPlcWeb/DeleteAreaResponse" message="tns:DbPlcWeb_DeleteArea_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/DbPlcWeb/DeleteAreaResponseErrorFault" name="ResponseErrorFault" message="tns:DbPlcWeb_DeleteArea_ResponseErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteWorkCenter">
+      <wsdl:input wsaw:Action="http://tempuri.org/DbPlcWeb/DeleteWorkCenter" message="tns:DbPlcWeb_DeleteWorkCenter_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/DbPlcWeb/DeleteWorkCenterResponse" message="tns:DbPlcWeb_DeleteWorkCenter_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/DbPlcWeb/DeleteWorkCenterResponseErrorFault" name="ResponseErrorFault" message="tns:DbPlcWeb_DeleteWorkCenter_ResponseErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeletePlc">
+      <wsdl:input wsaw:Action="http://tempuri.org/DbPlcWeb/DeletePlc" message="tns:DbPlcWeb_DeletePlc_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/DbPlcWeb/DeletePlcResponse" message="tns:DbPlcWeb_DeletePlc_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/DbPlcWeb/DeletePlcResponseErrorFault" name="ResponseErrorFault" message="tns:DbPlcWeb_DeletePlc_ResponseErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeletePlcTag">
+      <wsdl:input wsaw:Action="http://tempuri.org/DbPlcWeb/DeletePlcTag" message="tns:DbPlcWeb_DeletePlcTag_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/DbPlcWeb/DeletePlcTagResponse" message="tns:DbPlcWeb_DeletePlcTag_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/DbPlcWeb/DeletePlcTagResponseErrorFault" name="ResponseErrorFault" message="tns:DbPlcWeb_DeletePlcTag_ResponseErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateArea">
+      <wsdl:input wsaw:Action="http://tempuri.org/DbPlcWeb/UpdateArea" message="tns:DbPlcWeb_UpdateArea_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/DbPlcWeb/UpdateAreaResponse" message="tns:DbPlcWeb_UpdateArea_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/DbPlcWeb/UpdateAreaResponseErrorFault" name="ResponseErrorFault" message="tns:DbPlcWeb_UpdateArea_ResponseErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateWorkCenter">
+      <wsdl:input wsaw:Action="http://tempuri.org/DbPlcWeb/UpdateWorkCenter" message="tns:DbPlcWeb_UpdateWorkCenter_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/DbPlcWeb/UpdateWorkCenterResponse" message="tns:DbPlcWeb_UpdateWorkCenter_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/DbPlcWeb/UpdateWorkCenterResponseErrorFault" name="ResponseErrorFault" message="tns:DbPlcWeb_UpdateWorkCenter_ResponseErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdatePlc">
+      <wsdl:input wsaw:Action="http://tempuri.org/DbPlcWeb/UpdatePlc" message="tns:DbPlcWeb_UpdatePlc_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/DbPlcWeb/UpdatePlcResponse" message="tns:DbPlcWeb_UpdatePlc_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/DbPlcWeb/UpdatePlcResponseErrorFault" name="ResponseErrorFault" message="tns:DbPlcWeb_UpdatePlc_ResponseErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdatePlcTag">
+      <wsdl:input wsaw:Action="http://tempuri.org/DbPlcWeb/UpdatePlcTag" message="tns:DbPlcWeb_UpdatePlcTag_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/DbPlcWeb/UpdatePlcTagResponse" message="tns:DbPlcWeb_UpdatePlcTag_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/DbPlcWeb/UpdatePlcTagResponseErrorFault" name="ResponseErrorFault" message="tns:DbPlcWeb_UpdatePlcTag_ResponseErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Login">
+      <wsdl:input wsaw:Action="http://tempuri.org/DbPlcWeb/Login" message="tns:DbPlcWeb_Login_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/DbPlcWeb/LoginResponse" message="tns:DbPlcWeb_Login_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/DbPlcWeb/LoginResponseErrorFault" name="ResponseErrorFault" message="tns:DbPlcWeb_Login_ResponseErrorFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_DbPlcWeb" type="tns:DbPlcWeb">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetAllArea">
+      <soap:operation soapAction="http://tempuri.org/DbPlcWeb/GetAllArea" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ResponseErrorFault">
+        <soap:fault use="literal" name="ResponseErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllWorkCenter">
+      <soap:operation soapAction="http://tempuri.org/DbPlcWeb/GetAllWorkCenter" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ResponseErrorFault">
+        <soap:fault use="literal" name="ResponseErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllPlc">
+      <soap:operation soapAction="http://tempuri.org/DbPlcWeb/GetAllPlc" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ResponseErrorFault">
+        <soap:fault use="literal" name="ResponseErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GelAllPlcTag">
+      <soap:operation soapAction="http://tempuri.org/DbPlcWeb/GelAllPlcTag" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ResponseErrorFault">
+        <soap:fault use="literal" name="ResponseErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllWorkCenterDto">
+      <soap:operation soapAction="http://tempuri.org/DbPlcWeb/GetAllWorkCenterDto" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ResponseErrorFault">
+        <soap:fault use="literal" name="ResponseErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllPlcDto">
+      <soap:operation soapAction="http://tempuri.org/DbPlcWeb/GetAllPlcDto" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ResponseErrorFault">
+        <soap:fault use="literal" name="ResponseErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllPlcTagDto">
+      <soap:operation soapAction="http://tempuri.org/DbPlcWeb/GetAllPlcTagDto" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ResponseErrorFault">
+        <soap:fault use="literal" name="ResponseErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="AddArea">
+      <soap:operation soapAction="http://tempuri.org/DbPlcWeb/AddArea" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ResponseErrorFault">
+        <soap:fault use="literal" name="ResponseErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="AddWorkCenter">
+      <soap:operation soapAction="http://tempuri.org/DbPlcWeb/AddWorkCenter" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ResponseErrorFault">
+        <soap:fault use="literal" name="ResponseErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="AddPlc">
+      <soap:operation soapAction="http://tempuri.org/DbPlcWeb/AddPlc" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ResponseErrorFault">
+        <soap:fault use="literal" name="ResponseErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="AddPlcTag">
+      <soap:operation soapAction="http://tempuri.org/DbPlcWeb/AddPlcTag" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ResponseErrorFault">
+        <soap:fault use="literal" name="ResponseErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteArea">
+      <soap:operation soapAction="http://tempuri.org/DbPlcWeb/DeleteArea" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ResponseErrorFault">
+        <soap:fault use="literal" name="ResponseErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteWorkCenter">
+      <soap:operation soapAction="http://tempuri.org/DbPlcWeb/DeleteWorkCenter" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ResponseErrorFault">
+        <soap:fault use="literal" name="ResponseErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="DeletePlc">
+      <soap:operation soapAction="http://tempuri.org/DbPlcWeb/DeletePlc" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ResponseErrorFault">
+        <soap:fault use="literal" name="ResponseErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="DeletePlcTag">
+      <soap:operation soapAction="http://tempuri.org/DbPlcWeb/DeletePlcTag" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ResponseErrorFault">
+        <soap:fault use="literal" name="ResponseErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateArea">
+      <soap:operation soapAction="http://tempuri.org/DbPlcWeb/UpdateArea" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ResponseErrorFault">
+        <soap:fault use="literal" name="ResponseErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateWorkCenter">
+      <soap:operation soapAction="http://tempuri.org/DbPlcWeb/UpdateWorkCenter" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ResponseErrorFault">
+        <soap:fault use="literal" name="ResponseErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="UpdatePlc">
+      <soap:operation soapAction="http://tempuri.org/DbPlcWeb/UpdatePlc" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ResponseErrorFault">
+        <soap:fault use="literal" name="ResponseErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="UpdatePlcTag">
+      <soap:operation soapAction="http://tempuri.org/DbPlcWeb/UpdatePlcTag" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ResponseErrorFault">
+        <soap:fault use="literal" name="ResponseErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Login">
+      <soap:operation soapAction="http://tempuri.org/DbPlcWeb/Login" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ResponseErrorFault">
+        <soap:fault use="literal" name="ResponseErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="PlcService">
+    <wsdl:port name="MetadataExchangeHttpBinding_DbPlcWeb" binding="i0:MetadataExchangeHttpBinding_DbPlcWeb">
+      <soap12:address location="http://localhost:8098/DbPlcWeb/mex" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>http://localhost:8098/DbPlcWeb/mex</wsa10:Address>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+    <wsdl:port name="BasicHttpBinding_DbPlcWeb" binding="tns:BasicHttpBinding_DbPlcWeb">
+      <soap:address location="http://localhost:8098/DbPlcWeb" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

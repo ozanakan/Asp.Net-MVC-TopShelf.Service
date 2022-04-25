@@ -1,0 +1,95 @@
+﻿
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @*<script src="~/Scripts/jquery.validate.min.js"></script>*@
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" style="margin-top: -50px">
+        <a class="navbar-brand" href="#"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        @Html.ActionLink("Massive Process", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+        
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ">
+                @*<li style="margin-right: 10px">@Html.ActionLink("Home", "Index", "Home")</li>*@
+                <li style="margin-right: 10px">@Html.ActionLink("Area", "Area", "Home")</li>
+                <li style="margin-right: 10px">@Html.ActionLink("WorkCenter", "WorkCenter", "Home")</li>
+                <li style="margin-right: 10px">@Html.ActionLink("Plc", "Plc", "Home")</li>
+                <li style="margin-right: 10px">@Html.ActionLink("PlcTag", "PlcTag", "Home")</li>
+
+            </ul>
+        </div>
+
+        @if (Session["UserName"] != null)
+        {
+            @*<div>@Session["UserName"].ToString()</div>*@
+            <div><button class="btn btn-warning form-control" id="btnLogOut" type="button" name="btnSave">Logout</button></div>
+        }
+        else
+        {
+            <div><button class="btn btn-warning form-control" onclick="location.href='@Url.Action("Login", "Home")'">Login</button></div>
+        }
+    </nav>
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#btnLogOut").click(function () {
+                Logout();
+            });
+        });
+        function MethodFinish() {
+            document.location.reload(true);
+        }
+        function Logout() {
+            $.ajax({
+                async: true,
+                type: 'POST',
+                dataType: 'JSON',
+                contentType: 'application/json;charset=utf-8',
+                url: '/Home/Logout',
+                success: function (response) {
+                    if (response.success === true) {
+                        toastr.success(response.message, 'Success Alert', { timeout: 3000 });
+                        setTimeout(MethodFinish, 1200);
+                    } else {
+                        toastr.error(response.message, 'Error Alert', { timeout: 3000 });
+                    }
+                },
+                error: function () {
+                    toastr.message('There is some problem to process your request.', 'Error Alert', { timeout: 3000 });
+                }
+            });
+        }
+    </script>
+
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

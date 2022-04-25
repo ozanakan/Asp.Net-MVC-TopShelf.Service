@@ -1,0 +1,291 @@
+﻿@using DbPlc.WEBMVCUI.Models
+@model ListViewModel
+@{
+    ViewBag.Title = "WorkCenter";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var workCenterId = null;
+            var multiClickControl = 0;
+            $("#btnSave").click(function () {
+                var workCenterName = $('#workCenterName').val();
+                var description = $('#description').val();
+                if (workCenterName.length > 0) {
+                    /*workCenterName değeri boş geçilemez kontrolu yapıldı.*/
+                    if (StringValidation(workCenterName + description) === true) {
+                        /* inputlar içerisinde ' değeri kontorlu yapıldı.*/
+                        if (multiClickControl === 0) {
+                            /* birden fazla tıklamada multiClickControl ile işlemin tek sefer yapılmasını sağlıyoruz.*/
+                            Save(workCenterName, description);
+                            multiClickControl++;
+                            setTimeout(MethodFinish, 1200);
+                        }
+                    }
+                    else {
+                        window.Swal.fire({
+                            icon: 'error',
+                            text: 'Threat Detected!'
+                        });
+                        setTimeout(MethodFinish, 2000);
+                    }
+                } else {
+                    window.Swal.fire({
+                        icon: 'error',
+                        text: 'WorkCenter name cannot be blank !'
+                    });
+                }
+            });
+            $(".btnDelete").click(function () {
+                window.Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+
+                        var workCenterId = $(this).attr('deleteWorkCenterId');
+                        var workCenter = { Id: workCenterId };
+
+                        $.ajax({
+                            async: true,
+                            type: 'POST',
+                            dataType: 'JSON',
+                            contentType: 'application/json;charset=utf-8',
+                            data: JSON.stringify(workCenter),
+                            url: '/Home/DeleteWorkCenter',
+                            success: function (response) {
+                                if (response.success === true) {
+                                    toastr.success(response.message, 'Success Alert', { timeout: 3000 });
+                                    setTimeout(MethodFinish, 1200);
+                                } else {
+                                    toastr.error(response.message, 'Error Alert', { timeout: 3000 });
+                                }
+                            },
+                            error: function () {
+                                toastr.message('There is some problem to process your request.', 'Error Alert', { timeout: 3000 });
+                            }
+                        });
+                    }
+                });
+            });
+            $(".btnSelect").click(function () {
+
+                workCenterId = $(this).attr('updateWorkCenterId');
+                var areaId = $(this).attr('updateAreaId');
+                var workCenterName = $(this).attr('updateName');
+                var description = $(this).attr('updateDescription');
+
+                $('#areaName').val(areaId);
+                $('#workCenterName').val(workCenterName);
+                $('#description').val(description);
+
+                javascript: scroll(0, 0);
+            });
+            $(".btnUpdate").click(function () {
+                if (workCenterId != null) {
+                    var areaId = $("#areaName").val();
+                    var workCenterName = $("#workCenterName").val();
+                    var description = $("#description").val();
+                    /*Tablodan seçme işlemi kontrolu.*/
+                    if (StringValidation(workCenterName + description) === true) {
+                        /* inputlar içerisinde ' değeri kontorlu yapıldı.*/
+                        if (multiClickControl === 0) {
+                            /* birden fazla tıklamada multiClickControl ile işlemin tek sefer yapılmasını sağlıyoruz.*/
+                            multiClickControl++;
+
+
+                            var workCenter = { Id: workCenterId, AreaId: areaId, Name: workCenterName, Description: description };
+                            $.ajax({
+                                async: true,
+                                type: 'POST',
+                                dataType: 'JSON',
+                                contentType: 'application/json;charset=utf-8',
+                                data: JSON.stringify(workCenter),
+                                url: '/Home/UpdateWorkCenter',
+                                success: function (response) {
+                                    if (response.success === true) {
+                                        toastr.success(response.message, 'Success Alert', { timeout: 3000 });
+                                        setTimeout(MethodFinish, 1200);
+                                    } else {
+                                        toastr.error(response.message, 'Error Alert', { timeout: 3000 });
+                                    }
+                                },
+                                error: function () {
+                                    toastr.message('There is some problem to process your request.', 'Error Alert', { timeout: 3000 });
+                                }
+                            });
+                            setTimeout(MethodFinish, 1200);
+                        }
+                    }
+                    else {
+                        window.Swal.fire({
+                            icon: 'error',
+                            text: 'Threat Detected!'
+                        });
+                        setTimeout(MethodFinish, 2000);
+                    }
+                } else {
+                    window.Swal.fire({
+                        icon: 'error',
+                        text: 'No field has been selected!'
+                    });
+                }
+            });
+        });
+        function StringValidation(text) {
+            var dangerousWords = "'";
+            if (!text.match(dangerousWords)) {
+                setTimeout(MethodFinish, 1200);
+                return true;
+            }
+            return false;
+        }
+        function Save(workCenterName, description) {
+
+            var areaId = $("#areaName").val();
+            var workCenter = { AreaId: areaId, Name: workCenterName, Description: description };
+
+            $.ajax({
+                async: true,
+                type: 'POST',
+                dataType: 'JSON',
+                contentType: 'application/json;charset=utf-8',
+                data: JSON.stringify(workCenter),
+                url: '/Home/AddWorkCenter',
+                success: function (response) {
+                    if (response.success === true) {
+                        toastr.success(response.message, 'Success Alert', { timeout: 3000 });
+                        setTimeout(MethodFinish, 1200);
+                    } else {
+                        toastr.error(response.message, 'Error Alert', { timeout: 3000 });
+                    }
+                },
+                error: function () {
+                    toastr.message('There is some problem to process your request.', 'Error Alert', { timeout: 3000 });
+                }
+            });
+        }
+        function MethodFinish() {
+            document.location.reload(true);
+        }
+        $(function () {
+            $("#inputFilterAreaName").on("keyup",
+                function () {
+                    var name = $(this).val().toLowerCase();
+                    $("#workcenters tr td:nth-child(2)").filter(function () {
+                        $(this).parent().toggle($(this).text().toLowerCase().indexOf(name) > -1);
+                    });
+                });
+        });
+        $(function () {
+            $("#inputFilterWorkName").on("keyup",
+                function () {
+                    var name = $(this).val().toLowerCase();
+                    $("#workcenters tr td:nth-child(3)").filter(function () {
+                        $(this).parent().toggle($(this).text().toLowerCase().indexOf(name) > -1);
+                    });
+                });
+        });
+        $(function () {
+            $("#inputFilterDesc").on("keyup",
+                function () {
+                    var name = $(this).val().toLowerCase();
+                    $("#workcenters tr td:nth-child(4)").filter(function () {
+                        $(this).parent().toggle($(this).text().toLowerCase().indexOf(name) > -1);
+                    });
+                });
+        });
+    </script>
+}
+<div class="container">
+    <div class="col-md-12">
+        <div class="card mt-3">
+            <form name="form" method="post">
+                <div class="card-header"><h5>WorkCenter</h5></div>
+                <div class="card-body">
+                    <label>Area Name</label>
+                    <div class="mb-3">
+                        <div class="input-group-prepend">
+                            <select id="areaName" name="areaName ">
+                                @if (Model != null)
+                                {
+                                    foreach (var item in Model.ListArea)
+                                    {
+                                        <option value="@item.Id">@item.Name</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label>WorkCenter Name</label>
+                        <div class="form-group">
+                            <input type="text" id="workCenterName" name="workCenterName" class="form-control" placeholder="WorkCenter Name" />
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label>Description</label>
+                        <div class="form-group">
+                            <textarea class="form-control " type="text" id="description" name="description" rows="4" aria-label="With textarea" placeholder="Description"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button class="btn btn-primary " id="btnSave" style="width: 90px" type="button" name="btnSave">Save</button>
+                    <button class="btn btn-success btnUpdate" type="button">Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div style="margin-top: 30px; position: relative; overflow: auto; display: block">
+        <header class="card-header">
+            <h6>Filter</h6>
+            <hr /><div class="row">
+                <input class="form-control" style="margin-left:1%" type="text" id="inputFilterAreaName" placeholder="Enter Area Name..." />
+                <input class="form-control" style="margin-left:1%" type="text" id="inputFilterWorkName" placeholder="Enter WorkCenter Name..." />
+                <input class="form-control" style="margin-left:1%" type="text" id="inputFilterDesc" placeholder="Enter Description..." />
+            </div>
+        </header>
+        <table class="table table-bordered table-striped mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Area Name</th>
+                    <th scope="col">Work Center Name</th>
+                    <th scope="col">Description</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody id="workcenters">
+                @if (Model != null)
+                {
+                    foreach (var item in Model.LIstWorkCenterDto)
+                    {
+                        <tr>
+                            <td>@item.Id</td>
+                            <td>@item.AreaName</td>
+                            <td>@item.Name</td>
+                            <td>@item.Description</td>
+                            <td width="30%">
+                                <button class="btn btn-danger btnDelete" deleteWorkCenterId="@item.Id" type="button">Delete</button>
+                                <button class="btn btn-success btnSelect" updateAreaName="@item.AreaName" updateWorkCenterId="@item.Id" updateAreaId="@item.AreaId" updateName="@item.Name" updateDescription="@item.Description" type="button">Update</button>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+

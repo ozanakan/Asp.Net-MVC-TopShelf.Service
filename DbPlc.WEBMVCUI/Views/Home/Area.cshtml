@@ -1,0 +1,230 @@
+﻿@model List<DbPlc.EntityFramework.Entity.Area>
+@{
+    ViewBag.Title = "Area";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@section scripts
+{
+    <script type="text/javascript">
+        var areaName = null;
+        var areaId = null;
+        var multiClickControl = 0;
+        //butona tıklayıp işlem yapılırken birden fazla tıklamada multiClickControl ile işlemin tek sefer yapılmasını sağlıyoruz.
+        $(document).ready(function () {
+            $("#btnSave").click(function () {
+                var areaName = $('#areaName').val();
+                if (areaName.length > 0) {
+                    if (StringValidation(areaName) === true) {
+                        if (multiClickControl === 0) {
+                            Save(areaName);
+                            multiClickControl++;
+                            setTimeout(MethodFinish, 1200);
+                        }
+                    }
+                    else {
+                        window.Swal.fire({
+                            icon: 'error',
+                            text: 'Threat Detected!'
+                        });
+                        setTimeout(MethodFinish, 2000);
+                    }
+                } else {
+                    window.Swal.fire({
+                        icon: 'error',
+                        text: 'Area name cannot be blank !'
+                    });
+                }
+            });
+            $(".btnDelete").click(function () {
+
+                window.Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        var areaId = $(this).attr('deleteAreaId');
+                        var area = { Id: areaId };
+                        $.ajax({
+                            async: true,
+                            type: 'POST',
+                            dataType: 'JSON',
+                            contentType: 'application/json;charset=utf-8',
+                            data: JSON.stringify(area),
+                            url: '/Home/DeleteArea',
+                            success: function (response) {
+                                if (response.success === true) {
+                                    toastr.success(response.message, 'Success Alert', { timeout: 3000 });
+                                    setTimeout(MethodFinish, 1200);
+                                } else {
+                                    toastr.error(response.message, 'Error Alert', { timeout: 3000 });
+                                }
+                            },
+                            error: function () {
+                                toastr.message('There is some problem to process your request.', 'Error Alert', { timeout: 3000 });
+                            }
+                        });
+                    }
+                });
+            });
+            $(".btnSelect").click(function () {
+                areaName = $(this).attr('updateName');
+                areaId = $(this).attr('updateAreaId');
+                document.getElementById('areaName').value = areaName;
+
+                javascript: scroll(0, 0);
+            });
+            $(".btnUpdate").click(function () {
+                var areaName = $('#areaName').val();
+                if (areaId != null) {
+                    if (multiClickControl === 0) {
+                        multiClickControl++;
+                        var area = { Id: areaId, Name: areaName };
+                        $.ajax({
+                            async: true,
+                            type: 'POST',
+                            dataType: 'JSON',
+                            contentType: 'application/json;charset=utf-8',
+                            data: JSON.stringify(area),
+                            url: '/Home/UpdateArea',
+                            success: function (response) {
+                                if (response.success === true) {
+                                    toastr.success(response.message, 'Success Alert', { timeout: 3000 });
+                                    setTimeout(MethodFinish, 1200);
+                                } else {
+                                    toastr.error(response.message, 'Error Alert', { timeout: 3000 });
+                                }
+                            },
+                            error: function () {
+                                toastr.message('There is some problem to process your request.', 'Error Alert', { timeout: 3000 });
+                            }
+                        });
+                        setTimeout(MethodFinish, 1200);
+                    }
+                } else {
+                    window.Swal.fire({
+                        icon: 'error',
+                        text: 'No field has been selected!!'
+                    });
+                }
+            });
+        });
+        function Save(areaName) {
+            var area = { Name: areaName };
+            $.ajax({
+                async: true,
+                type: 'POST',
+                dataType: 'JSON',
+                contentType: 'application/json;charset=utf-8',
+                data: JSON.stringify(area),
+                url: '/Home/AddArea',
+                success: function (response) {
+                    if (response.success === true) {
+                        toastr.success(response.message, 'Success Alert', { timeout: 3000 });
+                        setTimeout(MethodFinish, 1200);
+                    } else {
+                        toastr.error(response.message, 'Error Alert', { timeout: 3000 });
+                    }
+                },
+                error: function () {
+                    toastr.message('There is some problem to process your request.', 'Error Alert', { timeout: 3000 });
+                }
+            });
+        }
+        function MethodFinish() {
+            document.location.reload(true);
+        }
+        function StringValidation(text) {
+            var dangerousWords = "'";
+            if (!text.match(dangerousWords)) {
+                setTimeout(MethodFinish, 1200);
+                return true;
+            }
+            return false;
+        }
+        $(function () {
+            $("#inputFilter").on("keyup",
+                function () {
+                    var name = $(this).val().toLowerCase();
+                    $("#persons tr td:nth-child(2)").filter(function () {
+                        $(this).parent().toggle($(this).text().toLowerCase().indexOf(name) > -1);
+                    });
+                });
+        });
+    </script>
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="container">
+            <div class="col-md-12">
+                <form id="basic-form" name="form" method="post">
+                    <div class="card mt-3">
+                        <div class="card-header"><h5>Area</h5></div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label for="areaName">Area Name</label>
+                                <div class="form-group">
+                                    <input type="text" name="areaName" id="areaName" class="form-control" placeholder="Area Name" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-fill btn-primary " id="btnSave" style="width: 90px" type="button" name="btnSave">Save</button>
+                            <button class="btn btn-success btnUpdate" type="button">Update</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div style="margin-top: 30px;position: relative; overflow: auto;display: block">
+            <header class="card-header">
+                <h6>Filter </h6>
+                <hr /><div class="row">
+                    <input class="form-control" style="margin-left:2%" type="text" id="inputFilter" placeholder="Enter Area Name..." />
+                </div>
+            </header>
+            <table class="table table-bordered table-striped mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">AreaName</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody id="persons">
+                    @if (Model != null)
+                    {
+                        foreach (var item in Model)
+                        {
+                            <tr name="areaName" id="areaName">
+                                <td width="10%">@item.Id</td>
+                                <td width="60%" name="areaNameTable" id="areaNameTable">@item.Name</td>
+                                <td width="30%">
+                                    <button class="btn btn-danger btnDelete" deleteAreaId="@item.Id" type="button">Delete</button>
+                                    <button class="btn btn-success btnSelect" updateName="@item.Name" updateAreaId="@item.Id" type="button">Update</button>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+

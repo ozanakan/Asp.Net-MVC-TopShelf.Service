@@ -1,0 +1,7 @@
+C:\Users\massive\source\repos\WebSolution\DbPlc.EntityFramework\bin\Release\DbPlc.EntityFramework.dll.config
+C:\Users\massive\source\repos\WebSolution\DbPlc.EntityFramework\bin\Release\DbPlc.EntityFramework.dll
+C:\Users\massive\source\repos\WebSolution\DbPlc.EntityFramework\bin\Release\DbPlc.EntityFramework.pdb
+C:\Users\massive\source\repos\WebSolution\DbPlc.EntityFramework\obj\Release\DbPlc.EntityFramework.csproj.AssemblyReference.cache
+C:\Users\massive\source\repos\WebSolution\DbPlc.EntityFramework\obj\Release\DbPlc.EntityFramework.csproj.CoreCompileInputs.cache
+C:\Users\massive\source\repos\WebSolution\DbPlc.EntityFramework\obj\Release\DbPlc.EntityFramework.dll
+C:\Users\massive\source\repos\WebSolution\DbPlc.EntityFramework\obj\Release\DbPlc.EntityFramework.pdb
