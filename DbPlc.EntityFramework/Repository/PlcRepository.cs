@@ -7,16 +7,56 @@ using System.Text;
 using System.Threading.Tasks;
 using DbPlc.EntityFramework.Entity;
 using DbPlc.EntityFramework.Entity.Dto;
-using DbPlc.EntityFramework.Repository.Abstract;
 
 namespace DbPlc.EntityFramework.Repository
 {
 
-    public class PlcRepository:IPlcDal
+    public class PlcRepository
     {
         private readonly Connection _con = new Connection();
-        
-        
+        private static readonly object LockObject = new object();
+        private static PlcRepository _plcRepository;
+
+        public PlcRepository()
+        {
+        }
+        public static PlcRepository CreateAsSingletonPlc()
+        {
+            lock (LockObject)
+            {
+                if (_plcRepository==null)
+                {
+                    _plcRepository = new PlcRepository();
+                }
+            }
+            return _plcRepository;
+        }
+
+
+        public bool Add(Plc plc)
+        {
+            try
+            {
+                var queryString = String.Format("INSERT INTO Plcs(WorkCenterId,Name,Ip,Slot,ConnType) values ('{0}','{1}','{2}','{3}','{4}')",plc.WorkCenterId,plc.Name,plc.Ip,plc.Slot,plc.ConnType );
+
+                if (_con.connection.State == ConnectionState.Closed)
+                    _con.connection.Open();
+
+                var command = new SqlCommand(queryString, _con.connection);
+                var queryResult = command.ExecuteNonQuery();
+                return queryResult != -1;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            finally
+            {
+                if (_con.connection.State == ConnectionState.Open)
+                    _con.connection.Close();
+            }
+        }
         public List<Plc> GetAll()
         {
             var plclist = new List<Plc>();
@@ -44,30 +84,6 @@ namespace DbPlc.EntityFramework.Repository
                     plclist.Add(plc);
                 }
                 return plclist;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
-            finally
-            {
-                if (_con.connection.State == ConnectionState.Open)
-                    _con.connection.Close();
-            }
-        }
-        public bool Add(Plc plc)
-        {
-            try
-            {
-                var queryString = String.Format("INSERT INTO Plcs(WorkCenterId,Name,Ip,Slot,ConnType) values ('{0}','{1}','{2}','{3}','{4}')",plc.WorkCenterId,plc.Name,plc.Ip,plc.Slot,plc.ConnType );
-
-                if (_con.connection.State == ConnectionState.Closed)
-                    _con.connection.Open();
-
-                var command = new SqlCommand(queryString, _con.connection);
-                var queryResult = command.ExecuteNonQuery();
-                return queryResult != -1;
             }
             catch (Exception e)
             {

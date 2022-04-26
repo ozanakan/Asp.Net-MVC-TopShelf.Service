@@ -7,14 +7,31 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DbPlc.EntityFramework.Entity.Dto;
-using DbPlc.EntityFramework.Repository.Abstract;
 
 namespace DbPlc.EntityFramework.Repository
 {
-    public class PlcTagRepository:IPlcTagDal
+    public class PlcTagRepository
     {
         private readonly Connection _con = new Connection();
-      
+        private static PlcTagRepository _plcTagRepository;
+        private static readonly object LockObject = new object();
+
+        public PlcTagRepository()
+        {
+        }
+        public static PlcTagRepository CreateAsSingletonPlcTag()
+        {
+            lock (LockObject)
+            {
+                if (_plcTagRepository==null)
+                {
+                    _plcTagRepository = new PlcTagRepository();
+                }
+            }
+            return _plcTagRepository;
+        }
+
+
 
         public List<PlcTag> GetAll()
         {

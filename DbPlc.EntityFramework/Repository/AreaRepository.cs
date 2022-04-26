@@ -8,14 +8,57 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using DbPlc.EntityFramework.Entity;
-using DbPlc.EntityFramework.Repository.Abstract;
 
 namespace DbPlc.EntityFramework.Repository
 {
-    public class AreaRepository:IAreaDal
+    public class AreaRepository
     {
         private readonly Connection _con = new Connection();
-   
+        //Singleton patern kullanarak tek sefer nesne üretip her istekte aynı nesneyi veriyoruz.
+
+        private static AreaRepository _areaRepository;
+        private static readonly object LockObject = new object();
+        //İşlem bitmeden bir başka işlem gelirse _lockObject ile işlem bitmesini daha sonra diğer işleme başlamayı sağlıyoruz.
+
+        private AreaRepository()
+        {
+        }
+        public static AreaRepository CreateAsSingletonArea()
+        {
+            lock (LockObject)
+            {
+                if (_areaRepository == null)
+                {
+                    _areaRepository = new AreaRepository();
+                }
+            }
+            return _areaRepository;
+        }
+
+        public bool Add(Area area)
+        {
+            try
+            {
+                var queryString = string.Format("INSERT INTO Areas(Name) VALUES('{0}')", area.Name);
+
+                if (_con.connection.State == ConnectionState.Closed)
+                    _con.connection.Open();
+
+                var command = new SqlCommand(queryString, _con.connection);
+                var queryResult = command.ExecuteNonQuery();
+                return queryResult != -1;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            finally
+            {
+                if (_con.connection.State == ConnectionState.Open)
+                    _con.connection.Close();
+            }
+        }
         public List<Area> GetAll()
         {
             var arealist = new List<Area>();
@@ -37,30 +80,6 @@ namespace DbPlc.EntityFramework.Repository
                     });
                 }
                 return arealist;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
-            finally
-            {
-                if (_con.connection.State == ConnectionState.Open)
-                    _con.connection.Close();
-            }
-        }
-        public bool Add(Area area)
-        {
-            try
-            {
-                var queryString = string.Format("INSERT INTO Areas(Name) VALUES('{0}')", area.Name);
-
-                if (_con.connection.State == ConnectionState.Closed)
-                    _con.connection.Open();
-
-                var command = new SqlCommand(queryString, _con.connection);
-                var queryResult = command.ExecuteNonQuery();
-                return queryResult != -1;
             }
             catch (Exception e)
             {

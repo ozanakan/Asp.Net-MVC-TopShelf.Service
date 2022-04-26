@@ -18,11 +18,19 @@ namespace DbPlc.Service
                          ConcurrencyMode = ConcurrencyMode.Multiple)]
     class PlcService : IController
     {
+        //Singleton Pattern 
+        
+        //private readonly AreaRepository _areaRepository = new AreaRepository();
+        //private readonly WorkCenterRepository _workCenterRepository = new WorkCenterRepository();
+        //private readonly PlcRepository _plcRepository = new PlcRepository();
+        //private readonly PlcTagRepository _plcTagRepository = new PlcTagRepository();
+        
+        private readonly AreaRepository _areaRepository = AreaRepository.CreateAsSingletonArea();
+        private readonly WorkCenterRepository _workCenterRepository=WorkCenterRepository.CreateAsSingletonWorkCenter();
+        private readonly PlcRepository _plcRepository=PlcRepository.CreateAsSingletonPlc();
+        private readonly PlcTagRepository _plcTagRepository=PlcTagRepository.CreateAsSingletonPlcTag();
 
-        private readonly AreaRepository _areaRepository = new AreaRepository();
-        private readonly WorkCenterRepository _workCenterRepository = new WorkCenterRepository();
-        private readonly PlcRepository _plcRepository = new PlcRepository();
-        private readonly PlcTagRepository _plcTagRepository = new PlcTagRepository();
+        
         private readonly LogEvent _logger = new LogEvent();
         private readonly UserRepository _userRepository = new UserRepository();
         private readonly InputControl _inputControl = new InputControl();

@@ -8,14 +8,32 @@ using System.Text;
 using System.Threading.Tasks;
 using DbPlc.EntityFramework.Entity;
 using DbPlc.EntityFramework.Entity.Dto;
-using DbPlc.EntityFramework.Repository.Abstract;
 
 namespace DbPlc.EntityFramework.Repository
 {
-    public class WorkCenterRepository:IWorkCenterDal
+    public class WorkCenterRepository
     {
         private readonly Connection _con = new Connection();
-       
+        private static WorkCenterRepository _workCenterRepository;
+        private static readonly object LockObject = new object();
+
+        private WorkCenterRepository()
+        {
+        }
+        public static WorkCenterRepository CreateAsSingletonWorkCenter()
+        {
+            lock (LockObject)
+            {
+                if (_workCenterRepository == null)
+                {
+                    _workCenterRepository = new WorkCenterRepository();
+                }
+            }
+            return _workCenterRepository;
+        }
+
+
+
         public List<WorkCenter> GetAll()
         {
             var workCenterlist = new List<WorkCenter>();

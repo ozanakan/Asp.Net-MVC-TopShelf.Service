@@ -54,12 +54,7 @@
     <Compile Include="Entity\PlcTag.cs" />
     <Compile Include="Entity\WorkCenter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repository\Abstract\IPlcDal.cs" />
-    <Compile Include="Repository\Abstract\IPlcTagDal.cs" />
-    <Compile Include="Repository\Abstract\IWorkCenterDal.cs" />
     <Compile Include="Repository\AreaRepository.cs" />
-    <Compile Include="Repository\Abstract\IAreaDal.cs" />
-    <Compile Include="Repository\IRepository.cs" />
     <Compile Include="Repository\PlcRepository.cs" />
     <Compile Include="Repository\PlcTagRepository.cs" />
     <Compile Include="Repository\UserRepository.cs" />

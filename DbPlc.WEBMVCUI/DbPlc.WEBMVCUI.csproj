@@ -327,9 +327,9 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DbPlc.EntityFramework\DbPlc.Entities.csproj">
+    <ProjectReference Include="..\DbPlc.EntityFramework\DbPlc.EntityFramework.csproj">
       <Project>{07ef619c-24a1-4f97-acb3-7039b4a99d78}</Project>
-      <Name>DbPlc.Entities</Name>
+      <Name>DbPlc.EntityFramework</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

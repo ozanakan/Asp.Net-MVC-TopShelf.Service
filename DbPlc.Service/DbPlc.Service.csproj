@@ -128,9 +128,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DbPlc.EntityFramework\DbPlc.Entities.csproj">
+    <ProjectReference Include="..\DbPlc.EntityFramework\DbPlc.EntityFramework.csproj">
       <Project>{07EF619C-24A1-4F97-ACB3-7039B4A99D78}</Project>
-      <Name>DbPlc.Entities</Name>
+      <Name>DbPlc.EntityFramework</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
